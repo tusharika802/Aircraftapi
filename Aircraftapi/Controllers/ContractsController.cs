@@ -14,7 +14,7 @@ namespace AircraftDashboardAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(Roles = "admin")]
+    [Authorize]
     public class ContractsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -48,7 +48,6 @@ namespace AircraftDashboardAPI.Controllers
                     .Select(p => p.Name)
                     .ToList();
 
-                // Return an object with contract and partner info
                 return new
                 {
                     contract.Id,

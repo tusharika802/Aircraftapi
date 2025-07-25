@@ -9,7 +9,7 @@ namespace AircraftDashboardAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(Roles = "admin")]
+    [Authorize]
 
     public class PartsController : ControllerBase
     {

@@ -1,4 +1,7 @@
+using Aircraftapi;
 using Aircraftapi.Data;
+
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -6,11 +9,11 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ?? Database
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ?? CORS
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp",
@@ -19,11 +22,11 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod());
 });
 
-// ?? Controllers
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// ? Add Swagger with JWT Authorization
+// JWT 
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Aircraft API", Version = "v1" });
@@ -53,8 +56,9 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-// ?? JWT Authentication
+
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -75,7 +79,6 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// ?? Middleware
 
 if (app.Environment.IsDevelopment())
 {
@@ -87,7 +90,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCors("AllowAngularApp");
-app.UseAuthentication(); // ?? Must come before UseAuthorization
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();

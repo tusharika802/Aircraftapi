@@ -7,7 +7,7 @@
         public string Email { get; set; } = string.Empty;
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-        public string Role { get; set; }  // 🔥 Add this line
+        public string Role { get; set; } 
         public string ProfileImagePath { get; set; }
 
     }

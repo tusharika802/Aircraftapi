@@ -9,7 +9,7 @@ namespace Aircraftapi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "admin")]
+    [Authorize]
 
     public class PartnerController : ControllerBase
     {
